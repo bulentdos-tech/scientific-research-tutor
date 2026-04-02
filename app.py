@@ -1,6 +1,5 @@
 # app.py
 import streamlit as st
-import requests
 
 # ---- CONFIG ----
 st.set_page_config(
@@ -20,7 +19,7 @@ with st.expander("How to use this platform"):
     st.markdown("""
 1. Follow the steps sequentially.  
 2. Always answer the questions before moving forward.  
-3. Your answers will be analyzed using AI and corrected when necessary.  
+3. Your answers will be analyzed and corrected when necessary.  
 4. Revisit any step at any time.  
 5. Focus on **reasoning and logic**, not memorization.
 """)
@@ -43,24 +42,10 @@ stage = st.sidebar.selectbox("Select the teaching stage:", [
     "Step 13: Optional Advanced"
 ])
 
-# ---- AI FEEDBACK FUNCTION (Gemini / OpenAI compatible) ----
-gemini_key = st.secrets["GEMINI_API_KEY"]  # Or OpenAI key
-
+# ---- FAKE AI FEEDBACK FUNCTION (disabled for now) ----
 def get_ai_feedback(prompt_text):
-    url = "https://api.gemini.google/v1/ai/feedback"  # Update if using OpenAI
-    headers = {
-        "Authorization": f"Bearer {gemini_key}",
-        "Content-Type": "application/json"
-    }
-    data = {
-        "prompt": f"Analyze this student input and give constructive feedback:\n{prompt_text}",
-        "model": "gemini-1.5"  # adjust if using another model
-    }
-    try:
-        response = requests.post(url, headers=headers, json=data)
-        return response.json().get("output_text", "No feedback returned.")
-    except Exception as e:
-        return f"Error contacting AI: {e}"
+    # Temporarily disabled to prevent errors
+    return "AI feedback is currently disabled. This is a placeholder."
 
 # ---- STAGE LOGIC ----
 user_input = ""
@@ -78,7 +63,7 @@ Think of it as a structured way of **asking questions and finding evidence-based
         user_input = q1 + "\n" + q2
         feedback = get_ai_feedback(user_input)
         st.success("✅ Your thoughts have been recorded.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 2: Decomposition":
     st.header("Step 2: Decomposition of the Research Process")
@@ -101,7 +86,7 @@ The scientific research process typically includes:
         user_input = reason
         feedback = get_ai_feedback(user_input)
         st.success("✅ Your reasoning recorded.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 3: Step-by-Step Problem Modeling":
     st.header("Step 3: Step-by-Step Research Problem Modeling")
@@ -116,7 +101,7 @@ To create a research problem:
     if user_input:
         feedback = get_ai_feedback(user_input)
         st.success("✅ Problem recorded.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 4: Generate Alternatives":
     st.header("Step 4: Alternative Research Problems")
@@ -135,7 +120,7 @@ elif stage == "Step 4: Generate Alternatives":
         if best:
             feedback = get_ai_feedback(best)
             st.success(f"Selected alternative: {best}")
-            st.info("AI Feedback:\n" + feedback)
+            st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 5: Research Construction":
     st.header("Step 5: Research Construction")
@@ -151,7 +136,7 @@ elif stage == "Step 5: Research Construction":
     if user_input:
         feedback = get_ai_feedback(user_input)
         st.success("✅ Research questions saved.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 6: Literature & Gap":
     st.header("Step 6: Literature Writing & Gap Finding")
@@ -164,7 +149,7 @@ elif stage == "Step 6: Literature & Gap":
     if user_input:
         feedback = get_ai_feedback(user_input)
         st.success("✅ Mini literature review recorded.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 7: Self-Critique":
     st.header("Step 7: Self-Critique")
@@ -173,7 +158,7 @@ elif stage == "Step 7: Self-Critique":
     if user_input:
         feedback = get_ai_feedback(user_input)
         st.success("✅ Self-critique recorded.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 8: Expert Review":
     st.header("Step 8: Multiple Expert Review")
@@ -187,7 +172,7 @@ Evaluate your work from 3 perspectives:
     if user_input:
         feedback = get_ai_feedback(user_input)
         st.success("✅ Expert perspectives saved.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 9: Self-Consistency":
     st.header("Step 9: Self-Consistency Check")
@@ -196,7 +181,7 @@ elif stage == "Step 9: Self-Consistency":
     if user_input:
         feedback = get_ai_feedback(user_input)
         st.success("✅ Self-consistency confirmed.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 10: Reverse Engineering":
     st.header("Step 10: Reverse Engineering")
@@ -205,7 +190,7 @@ elif stage == "Step 10: Reverse Engineering":
     if user_input:
         feedback = get_ai_feedback(user_input)
         st.success("✅ Article noted for reverse engineering.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 11: Meta-Prompting":
     st.header("Step 11: Meta-Prompting")
@@ -214,7 +199,7 @@ elif stage == "Step 11: Meta-Prompting":
     if user_input:
         feedback = get_ai_feedback(user_input)
         st.success("✅ Meta-prompt recorded.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 12: Adaptive Learning":
     st.header("Step 12: Adaptive Learning")
@@ -223,7 +208,7 @@ elif stage == "Step 12: Adaptive Learning":
     if user_input:
         feedback = get_ai_feedback(user_input)
         st.success("✅ Adaptation strategy saved.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 elif stage == "Step 13: Optional Advanced":
     st.header("Step 13: Optional Advanced")
@@ -235,7 +220,7 @@ elif stage == "Step 13: Optional Advanced":
     if user_input:
         feedback = get_ai_feedback(user_input)
         st.success("✅ Advanced ideas saved.")
-        st.info("AI Feedback:\n" + feedback)
+        st.info("Feedback:\n" + feedback)
 
 # ---- FOOTER ----
 st.markdown("---")
